@@ -3,7 +3,7 @@
 }
 
 <div id="main">
-    <div class="text-center"  v-if="!showUserInput">
+    <div class="text-center"  v-if="!showUserInput && !showProductSearch">
         <h1 class="display-4">CompareTheMortgage</h1>
 
         <p>Ever wanted to buy a house? Well this is the place to start! Enter your details now and learn about what mortgage products might be best suited to you.</p>
@@ -27,10 +27,45 @@
             </div>
             <div class="form-group mb-4">
                 <label>Date of Birth:</label>
-                <input class="form-control" type="date" id="firstName" v-model="dateOfBirth" />
+                <input class="form-control" type="date" id="dateOfBirth" v-model="dateOfBirth" />
             </div>
-            <button class="btn btn-info" v-on:click="submitInformation">Submit Information</button>
+            <button type="button" class="btn btn-info" v-on:click="submitInformation">Submit Information</button>
         </form>
+    </div>
+    <div v-if="showProductSearch">
+        <div class="form-group mb-4">
+            <label>House Price:</label>
+            <input type="number" class="form-control" id="price" v-model="price" />
+        </div>
+        <div class="form-group mb-4">
+            <label>Deposit:</label>
+            <input type="number" class="form-control" id="deposit" v-model="deposit" />
+        </div>
+        <button type="button" class="btn btn-info" v-on:click="fetchProducts">Find Products</button>
+    </div>
+    <div class="text-center">
+        <ul class="list-group">
+            <li v-for="bank in banksWithProducts"> @*Foreach bank*@
+                <h2>{{bank.bankName}}</h2>
+                <label>{{bank.bankAddress.address1}}</label>
+                <label>{{bank.bankAddress.address2}}</label>
+                <label>{{bank.bankAddress.address3}}</label>
+                <label>{{bank.bankAddress.address4}}</label>
+                <label>{{bank.bankAddress.postCode}}</label>
+
+                <ul class="list-group">
+                    <li v-for="product in bank.availableProducts"> @*Foreach product in bank*@
+                        APR: {{product.interestRate}}%
+                        <div class="alert alert-success" v-if="product.type == 1">
+                            Fixed
+                        </div>
+                        <div class="alert alert-danger" v-else>
+                            Variable
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
 </div>
 
