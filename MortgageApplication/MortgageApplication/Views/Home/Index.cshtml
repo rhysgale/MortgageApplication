@@ -41,11 +41,11 @@
             <label>Deposit:</label>
             <input type="number" class="form-control" id="deposit" v-model="deposit" />
         </div>
-        <button type="button" class="btn btn-info" v-on:click="fetchProducts">Find Products</button>
+        <button type="button" class="btn btn-info mb-4" v-on:click="fetchProducts">Find Products</button>
     </div>
     <div class="text-center">
         <ul class="list-group">
-            <li v-for="bank in banksWithProducts"> @*Foreach bank*@
+            <li v-for="bank in banksWithProducts" class="list-group-item"> @*Foreach bank*@
                 <h2>{{bank.bankName}}</h2>
                 <label>{{bank.bankAddress.address1}}</label>
                 <label>{{bank.bankAddress.address2}}</label>
@@ -53,8 +53,9 @@
                 <label>{{bank.bankAddress.address4}}</label>
                 <label>{{bank.bankAddress.postCode}}</label>
 
+                <h3>Products:</h3>
                 <ul class="list-group">
-                    <li v-for="product in bank.availableProducts"> @*Foreach product in bank*@
+                    <li v-for="product in bank.availableProducts" class="list-group-item"> @*Foreach product in bank*@
                         APR: {{product.interestRate}}%
                         <div class="alert alert-success" v-if="product.type == 1">
                             Fixed
