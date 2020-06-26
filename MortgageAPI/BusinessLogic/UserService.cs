@@ -15,7 +15,7 @@ namespace BusinessLogic
             _context = context;
         }
 
-        public NewUserResponse NewUserResponse(NewUserRequest request)
+        public NewUserResponse NewUser(NewUserRequest request)
         {
             var id = UserExists(request.Email) ?? Guid.NewGuid();
 
