@@ -2,7 +2,7 @@
 
 namespace Models.Request
 {
-    public class ElegibleProductsRequest
+    public class EligibleProductsRequest
     {
         public Guid UserId { get; set; }
         public double HouseValue { get; set; }

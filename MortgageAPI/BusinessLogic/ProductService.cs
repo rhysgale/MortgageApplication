@@ -5,6 +5,7 @@ using Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic
 {
@@ -17,24 +18,47 @@ namespace BusinessLogic
             _context = context;
         }
 
-        public ElegibleProductsResponse GetProducts(ElegibleProductsRequest request)
+        public EligibleProductsResponse GetProducts(EligibleProductsRequest request)
         {
             //Check we are of age... or return nothing
             if (!ValidateRequest(request))
-                return new ElegibleProductsResponse()
+                return new EligibleProductsResponse()
                 {
                     BanksWithProducts = new List<BankDTO>()
                 };
 
-
-
-            return new ElegibleProductsResponse()
+            return new EligibleProductsResponse()
             {
-
+                BanksWithProducts = GetBanksProductsForLTV(Helpers.Helpers.CalculateLoanToValue(request.Deposit, request.HouseValue))
             };
         }
 
-        private bool ValidateRequest(ElegibleProductsRequest request)
+        private List<BankDTO> GetBanksProductsForLTV(double ltv)
+        {
+            var eligibleBanks = _context.Products.Where(x => x.MaximumLTV > ltv).Select(x => x.BankId).Distinct();
+
+            var banks = _context.Banks.Include(x => x.Products).Where(x => eligibleBanks.Contains(x.Id)).Select(x => new BankDTO()
+            {
+                AvailableProducts = x.Products.Select(y => new ProductDTO()
+                {
+                    InterestRate = y.InterestRate,
+                    Type = y.Type
+                }).ToList(),
+                BankAddress = new AddressDTO()
+                {
+                    Address1 = x.Address1,
+                    Address2 = x.Address2,
+                    Address3 = x.Address3,
+                    Address4 = x.Address4,
+                    PostCode = x.PostCode
+                },
+                BankName = x.BankName
+            });
+
+            return banks.ToList();
+        }
+
+        private bool ValidateRequest(EligibleProductsRequest request)
         {
             var user = _context.Users.FirstOrDefault(x => x.Id == request.UserId);
 
@@ -46,7 +70,7 @@ namespace BusinessLogic
             if (user.DateOfBirth.Date > today.AddYears(-age)) age--;
 
             var lowestLTVProduct = _context.Products.OrderByDescending(x => x.MaximumLTV).First();
-            if (Helpers.Helpers.CalculateLoanToValue(request.Deposit, request.HouseValue) > lowestLTVProduct)
+            if (Helpers.Helpers.CalculateLoanToValue(request.Deposit, request.HouseValue) > lowestLTVProduct.MaximumLTV)
                 return false;
 
             return age > 17;

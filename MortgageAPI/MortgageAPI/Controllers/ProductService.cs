@@ -8,7 +8,7 @@ namespace MortgageAPI.Controllers
     public class ValuesController : ControllerBase
     {
         [HttpPost("EligibleProducts")]
-        public ElegibleProductsResponse ElegibleProducts()
+        public EligibleProductsResponse ElegibleProducts()
         {
             throw new System.Exception("Not implemented");
         }

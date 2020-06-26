@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Models.Response
 {
-    public class ElegibleProductsResponse
+    public class EligibleProductsResponse
     {
         public List<BankDTO> BanksWithProducts { get; set; }
     }
