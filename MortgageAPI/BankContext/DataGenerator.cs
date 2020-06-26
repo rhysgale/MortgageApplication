@@ -84,6 +84,8 @@ namespace BankContext
             ctx.Products.Add(product);
             ctx.Products.Add(product2);
             ctx.Products.Add(product3);
+
+            ctx.SaveChanges();
         }
     }
 }

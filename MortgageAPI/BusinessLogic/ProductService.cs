@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic
 {
-    public class ProductService
+    public class ProductService : IProductService
     {
         private readonly BankDbContext _context;
 
@@ -60,6 +60,8 @@ namespace BusinessLogic
 
         private bool ValidateRequest(EligibleProductsRequest request)
         {
+            var users = _context.Users.ToList();
+
             var user = _context.Users.FirstOrDefault(x => x.Id == request.UserId);
 
             // Save today's date.
@@ -69,8 +71,8 @@ namespace BusinessLogic
             // Go back to the year the person was born in case of a leap year
             if (user.DateOfBirth.Date > today.AddYears(-age)) age--;
 
-            var lowestLTVProduct = _context.Products.OrderByDescending(x => x.MaximumLTV).First();
-            if (Helpers.Helpers.CalculateLoanToValue(request.Deposit, request.HouseValue) > lowestLTVProduct.MaximumLTV)
+            var lowestLTVProduct = _context.Products.OrderByDescending(x => x.MaximumLTV).FirstOrDefault();
+            if (lowestLTVProduct == null || Helpers.Helpers.CalculateLoanToValue(request.Deposit, request.HouseValue) >= lowestLTVProduct.MaximumLTV)
                 return false;
 
             return age > 17;

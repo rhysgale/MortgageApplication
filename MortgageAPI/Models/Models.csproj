@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Rhys Gale</Authors>
+    <Company>CompareTheMortgage</Company>
+    <Product>ApiModels</Product>
+    <Description>Requestr and Response objects for the API</Description>
   </PropertyGroup>
 
 </Project>

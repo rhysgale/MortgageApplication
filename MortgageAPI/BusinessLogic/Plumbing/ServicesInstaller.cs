@@ -8,6 +8,10 @@ namespace BusinessLogic.Plumbing
         public static void InstallServices(this IServiceCollection services)
         {
             //Install the BankContext db context... install it here so the main api cannot access the DB context
+
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IProductService, ProductService>();
+
             services.InstallDbContext();
         }
     }

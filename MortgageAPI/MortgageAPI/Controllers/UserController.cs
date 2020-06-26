@@ -16,7 +16,7 @@ namespace MortgageAPI.Controllers
             _userService = userService;
         }
 
-        [HttpPost("EligibleProducts")]
+        [HttpPost("NewUser")]
         public NewUserResponse NewUser(NewUserRequest request)
         {
             return _userService.NewUser(request);

@@ -5,4 +5,9 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+
+  <ItemGroup>
+    <PackageReference Include="Models" Version="1.0.0" />
+  </ItemGroup>
+
 </Project>

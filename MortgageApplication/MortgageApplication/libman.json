@@ -6,8 +6,8 @@
       "library": "vue@2.6.11",
       "destination": "wwwroot/vue/",
       "files": [
-        "dist/vue.js",
-        "dist/vue.min.js"
+        "dist/vue.min.js",
+        "dist/vue.js"
       ]
     }
   ]

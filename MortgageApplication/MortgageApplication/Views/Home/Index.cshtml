@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="main">
+    <div class="text-center"  v-if="!showUserInput">
+        <h1 class="display-4">CompareTheMortgage</h1>
+
+        <p>Ever wanted to buy a house? Well this is the place to start! Enter your details now and learn about what mortgage products might be best suited to you.</p>
+
+        <button class="btn btn-success" v-on:click="applicationStart">Click here to start an application ></button>
+    </div>
+    <div v-if="showUserInput">
+        <form>
+            <div class="form-group mb-4">
+                <label>First Name:</label>
+                <input class="form-control" id="firstName" v-model="firstName" />
+            </div>
+            <div class="form-group mb-4">
+                <label>Last Name:</label>
+                <input class="form-control" id="lastName" v-model="lastName" />
+            </div>
+            <div class="form-group mb-4">
+                <label>Email Address:</label>
+                <input class="form-control" id="emailAddress" v-model="emailAddress" aria-describedby="emailHelp" />
+                <small id="emailHelp" class="form-text text-muted">This will not be sold to any third parties.</small>
+            </div>
+            <div class="form-group mb-4">
+                <label>Date of Birth:</label>
+                <input class="form-control" type="date" id="firstName" v-model="dateOfBirth" />
+            </div>
+            <button class="btn btn-info" v-on:click="submitInformation">Submit Information</button>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="~/Custom/Index.js"></script>

@@ -17,17 +17,19 @@ namespace BusinessLogic
 
         public NewUserResponse NewUser(NewUserRequest request)
         {
-            var id = UserExists(request.Email) ?? Guid.NewGuid();
+            var id = UserExists(request.Email);
 
             if (id == null)
             {
+                id = Guid.NewGuid();
+
                 var entity = new Users()
                 {
                     DateOfBirth = request.DateOfBirth,
                     Email = request.Email,
                     FirstName = request.FirstName,
                     LastName = request.LastName,
-                    Id = id
+                    Id = id.Value
                 };
 
                 _context.Users.Add(entity);
@@ -36,13 +38,13 @@ namespace BusinessLogic
 
             return new NewUserResponse()
             {
-                NewUserId = id
+                NewUserId = id.Value
             };
         }
 
         private Guid? UserExists(string emailAddress)
         {
-            return _context.Users.FirstOrDefault(x => x.Email == emailAddress).Id;
+            return _context.Users.FirstOrDefault(x => x.Email == emailAddress)?.Id;
         }
     }
 }
