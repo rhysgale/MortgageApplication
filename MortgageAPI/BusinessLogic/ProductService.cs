@@ -80,6 +80,9 @@ namespace BusinessLogic
             if (age < 18)
                 return "Not Old Enough";
 
+            if (request.Deposit >= request.HouseValue)
+                return "Deposit cannot be greater or equal to house value";
+
             return null;
         }
     }
