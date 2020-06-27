@@ -19,7 +19,17 @@ namespace MortgageAPI.Controllers
         [HttpPost("NewUser")]
         public NewUserResponse NewUser(NewUserRequest request)
         {
-            return _userService.NewUser(request);
+            try
+            {
+                return _userService.NewUser(request);
+            }
+            catch (System.Exception)
+            {
+                return new NewUserResponse()
+                {
+                    ErrorMessage = "Api Error"
+                };
+            }
         }
     }
 }

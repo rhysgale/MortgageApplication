@@ -21,10 +21,12 @@ namespace BusinessLogic
         public EligibleProductsResponse GetProducts(EligibleProductsRequest request)
         {
             //Check we are of age... or return nothing
-            if (!ValidateRequest(request))
+            var validate = ValidateRequest(request);
+            if (validate != null)
                 return new EligibleProductsResponse()
                 {
-                    BanksWithProducts = new List<BankDTO>()
+                    BanksWithProducts = new List<BankDTO>(),
+                    ErrorMessage = validate
                 };
 
             return new EligibleProductsResponse()
@@ -58,7 +60,7 @@ namespace BusinessLogic
             return banks.ToList();
         }
 
-        private bool ValidateRequest(EligibleProductsRequest request)
+        private string ValidateRequest(EligibleProductsRequest request)
         {
             var users = _context.Users.ToList();
 
@@ -73,9 +75,12 @@ namespace BusinessLogic
 
             var lowestLTVProduct = _context.Products.OrderByDescending(x => x.MaximumLTV).FirstOrDefault();
             if (lowestLTVProduct == null || Helpers.Helpers.CalculateLoanToValue(request.Deposit, request.HouseValue) >= lowestLTVProduct.MaximumLTV)
-                return false;
+                return "No Valid Products";
 
-            return age > 17;
+            if (age < 18)
+                return "Not Old Enough";
+
+            return null;
         }
     }
 }

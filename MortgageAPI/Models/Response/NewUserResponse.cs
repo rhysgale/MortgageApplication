@@ -2,7 +2,7 @@
 
 namespace Models.Response
 {
-    public class NewUserResponse
+    public class NewUserResponse : ResponseBase
     {
         public Guid NewUserId { get; set; }
     }

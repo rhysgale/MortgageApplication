@@ -3,6 +3,7 @@ using Models.Request;
 using Models.Response;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace BusinessLogic
 {
@@ -21,6 +22,13 @@ namespace BusinessLogic
 
             if (id == null)
             {
+                var val = ValidateUser(request);
+                if (val != null)
+                    return new NewUserResponse()
+                    {
+                        ErrorMessage = val
+                    };
+
                 id = Guid.NewGuid();
 
                 var entity = new Users()
@@ -40,6 +48,16 @@ namespace BusinessLogic
             {
                 NewUserId = id.Value
             };
+        }
+
+        private string ValidateUser(NewUserRequest model)
+        {
+            var reg = new Regex(@"^\S+@\S+$");
+
+            if (!reg.Match(model.Email).Success)
+                return "Invalid Email";
+
+            return null;
         }
 
         private Guid? UserExists(string emailAddress)

@@ -19,7 +19,17 @@ namespace MortgageAPI.Controllers
         [HttpPost("EligibleProducts")]
         public EligibleProductsResponse EligibleProducts(EligibleProductsRequest request)
         {
-            return _productService.GetProducts(request);
+            try
+            {
+                return _productService.GetProducts(request);
+            }
+            catch (System.Exception)
+            {
+                return new EligibleProductsResponse()
+                {
+                    ErrorMessage = "Api Error"
+                };
+            }
         }
     }
 }

@@ -9,11 +9,6 @@ If the API URL is different to the one in MortgageApplication -> Controllers -> 
 
 Then once done, the website should be loaded up and you will be able to input user details, then get mortgage products returned based off your given criteria. 
 
-# TODO: 
-- Better user input validation 
-- API Url's stored in the appsettings.json file
-- Better API side error handling
-
 # Database
 The database used is the Entity Framework Core InMemoryDatabase, with data created in MortgageAPI -> BankContext -> DataGenerator.cs. This is then called from Program.cs to populate the in memory database.
 
