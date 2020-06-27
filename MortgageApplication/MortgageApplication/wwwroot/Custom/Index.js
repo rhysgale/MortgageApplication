@@ -13,6 +13,14 @@
         banksWithProducts: ""
     },
     methods: {
+        handleError: function (obj) {
+            if (obj.errorMessage !== "" && obj.errorMessage !== null) {
+                toastr.error(obj.errorMessage);
+                return true;
+            }
+
+            return false;
+        },
         applicationStart: function () {
             this.showUserInput = true;
         },
@@ -28,6 +36,9 @@
             var response = await fetch("https://localhost:44371/api/NewUser", options);
 
             var data = await response.json();
+
+            if (this.handleError(data))
+                return;
 
             currentUserId = data.newUserId;
             this.showProductSearch = true;
@@ -45,6 +56,8 @@
             var response = await fetch("https://localhost:44371/api/GetEligibleProducts", options);
 
             var data = await response.json();
+            if (this.handleError(data))
+                return;
 
             this.banksWithProducts = data.banksWithProducts;
         }

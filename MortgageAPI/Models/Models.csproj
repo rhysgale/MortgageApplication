@@ -7,6 +7,7 @@
     <Company>CompareTheMortgage</Company>
     <Product>ApiModels</Product>
     <Description>Requestr and Response objects for the API</Description>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
 </Project>

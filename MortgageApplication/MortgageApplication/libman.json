@@ -9,6 +9,14 @@
         "dist/vue.min.js",
         "dist/vue.js"
       ]
+    },
+    {
+      "library": "toastr@2.1.4",
+      "destination": "wwwroot/toastr/",
+      "files": [
+        "build/toastr.min.js",
+        "build/toastr.min.css"
+      ]
     }
   ]
 }
